@@ -32,7 +32,7 @@ MMRL is an Android app that helps manage your own modules repository.
 
 ## Supported Versions
 
-- Android 8.0 ~ 15
+- Android 8.0 ~ 14
 - Magisk 24.0 ~ latest
 - KernelSU 0.5.1 ~ latest
 - APatch 10253 ~ latest
