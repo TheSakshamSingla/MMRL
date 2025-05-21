@@ -19,7 +19,7 @@ val baseModConfName = "ModConf"
 val appVersion = commitCount + 31320
 
 android {
-    compileSdk = 35
+    compileSdk = 36
     namespace = "com.dergoogler.mmrl"
 
     defaultConfig {
