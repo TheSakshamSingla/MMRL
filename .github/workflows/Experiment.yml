@@ -28,8 +28,10 @@ jobs:
 
       - name: Enable Build Scan agreement
         run: |
-          echo "termsOfServiceUrl=https://gradle.com/terms-of-service" >> gradle.properties
-          echo "termsOfServiceAgree=YES" >> gradle.properties
+          mkdir -p ~/.gradle
+          echo "systemProp.gradle.enterprise.url=https://ge.gradle.org" >> ~/.gradle/gradle.properties
+          echo "gradle.enterprise.build-scan.terms-of-service-url=https://gradle.com/terms-of-service" >> ~/.gradle/gradle.properties
+          echo "gradle.enterprise.build-scan.terms-of-service-agree=YES" >> ~/.gradle/gradle.properties
 
       - name: Build APK with Build Scan
         run: |
