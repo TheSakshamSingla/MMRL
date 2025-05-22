@@ -1,0 +1,47 @@
+name: Android Build (Release Only)
+
+on:
+  workflow_dispatch:
+    inputs:
+      buildType:
+        description: 'Build Type (Release/Debug)'
+        required: true
+        default: 'Release'
+
+jobs:
+  build:
+    name: Build APK
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: 21
+          distribution: temurin
+
+      - name: Make gradlew executable
+        run: chmod +x ./gradlew
+
+      - name: Enable Build Scan agreement
+        run: |
+          echo "termsOfServiceUrl=https://gradle.com/terms-of-service" >> gradle.properties
+          echo "termsOfServiceAgree=YES" >> gradle.properties
+
+      - name: Build APK with Build Scan
+        run: |
+          ./gradlew assemble${{ inputs.buildType }} --scan | tee build.log
+
+      - name: Extract Build Scan URL
+        if: always()
+        run: |
+          SCAN_URL=$(grep -o 'https://gradle.com/s/[A-Za-z0-9]*' build.log | tail -n 1)
+          echo "Build Scan URL: $SCAN_URL"
+          echo "BUILD_SCAN_URL=$SCAN_URL" >> $GITHUB_ENV
+
+      - name: Show Build Scan URL
+        if: env.BUILD_SCAN_URL != ''
+        run: echo "Build Scan: $BUILD_SCAN_URL"
