@@ -43,7 +43,3 @@ jobs:
           SCAN_URL=$(grep -o 'https://gradle.com/s/[A-Za-z0-9]*' build.log | tail -n 1)
           echo "Build Scan URL: $SCAN_URL"
           echo "BUILD_SCAN_URL=$SCAN_URL" >> $GITHUB_ENV
-
-      - name: Show Build Scan URL
-        if: env.BUILD_SCAN_URL != ''
-        run: echo "Build Scan: $BUILD_SCAN_URL"
